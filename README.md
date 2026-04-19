@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Digital</title>
+    <title>Fiche de suivi à votre formation</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #1a1c24; --surface: #23272e; --accent: #5865F2; --text: #ffffff; }
