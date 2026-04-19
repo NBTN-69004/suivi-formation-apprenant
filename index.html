@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Digital — Dashboard</title>
+    <style>
+        :root { --bg: #1a1c24; --surface: #23272e; --accent: #5865F2; --text: #ffffff; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .dashboard { background: var(--surface); padding: 30px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid #3f4455; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .logo { width: 140px; height: 140px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 20px; object-fit: cover; background: white; }
+        h1 { font-size: 24px; margin: 10px 0; letter-spacing: 1px; }
+        .motto { color: #f7b731; font-size: 13px; text-transform: uppercase; margin-bottom: 25px; }
+        .task { display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(0,0,0,0.2); margin-top: 8px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
+        .task:hover { border-color: var(--accent); }
+        .checkbox { width: 18px; height: 18px; border: 2px solid var(--accent); border-radius: 4px; flex-shrink: 0; }
+        .done .checkbox { background: var(--accent); }
+        .done span { text-decoration: line-through; opacity: 0.5; }
+        .bar-bg { background: #000; height: 8px; border-radius: 4px; margin-top: 15px; overflow: hidden; }
+        .bar-fill { background: var(--accent); height: 100%; width: 0%; transition: 0.4s; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <img src="logo.png" class="logo" alt="Logo">
+    <h1>CAMPUS DIGITAL</h1>
+    <div class="motto">"L'échec est un diplôme"</div>
+
+    <div style="text-align: left; font-size: 11px; color: #949ba4;">PROGRESSION</div>
+    <div class="bar-bg"><div class="bar-fill" id="fill"></div></div>
+
+    <div id="taskList" style="margin-top: 20px;">
+        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Analyse du besoin</span> </div>
+        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Objectifs Pédagogiques</span> </div>
+        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Scénarisation</span> </div>
+    </div>
+</div>
+
+<script>
+    function toggle(el) {
+        el.classList.toggle('done');
+        const tasks = document.querySelectorAll('.task');
+        const done = document.querySelectorAll('.done');
+        const pct = Math.round((done.length / tasks.length) * 100);
+        document.getElementById('fill').style.width = pct + '%';
+        // Sauvegarde locale
+        const states = Array.from(tasks).map(t => t.classList.contains('done'));
+        localStorage.setItem('campus_prog', JSON.stringify(states));
+    }
+
+    // Chargement de la sauvegarde
+    const saved = JSON.parse(localStorage.getItem('campus_prog'));
+    if(saved) {
+        const tasks = document.querySelectorAll('.task');
+        saved.forEach((isDone, i) => { if(isDone) tasks[i].classList.add('done'); });
+        const done = document.querySelectorAll('.done');
+        document.getElementById('fill').style.width = Math.round((done.length / tasks.length) * 100) + '%';
+    }
+</script>
+
+</body>
+</html>
