@@ -3,60 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Digital — Dashboard</title>
+    <title>Préparation Formation & Manœuvre</title>
     <style>
-        :root { --bg: #1a1c24; --surface: #23272e; --accent: #5865F2; --text: #ffffff; }
-        body { background: var(--bg); color: var(--text); font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .dashboard { background: var(--surface); padding: 30px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid #3f4455; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .logo { width: 140px; height: 140px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 20px; object-fit: cover; background: white; }
-        h1 { font-size: 24px; margin: 10px 0; letter-spacing: 1px; }
-        .motto { color: #f7b731; font-size: 13px; text-transform: uppercase; margin-bottom: 25px; }
-        .task { display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(0,0,0,0.2); margin-top: 8px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
-        .task:hover { border-color: var(--accent); }
-        .checkbox { width: 18px; height: 18px; border: 2px solid var(--accent); border-radius: 4px; flex-shrink: 0; }
-        .done .checkbox { background: var(--accent); }
-        .done span { text-decoration: line-through; opacity: 0.5; }
-        .bar-bg { background: #000; height: 8px; border-radius: 4px; margin-top: 15px; overflow: hidden; }
-        .bar-fill { background: var(--accent); height: 100%; width: 0%; transition: 0.4s; }
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #27ae60;
+            --discord-color: #5865F2;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 90px 20px 40px 20px;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .progress-wrapper { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+
+        .progress-text {
+            display: flex; justify-content: space-between;
+            font-weight: 800; font-size: 0.9rem; margin-bottom: 8px;
+            color: var(--primary-color); text-transform: uppercase;
+        }
+
+        .progress-bar-bg { background: #e0e6ed; height: 14px; border-radius: 20px; overflow: hidden; }
+
+        #progress-fill {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            width: 0%; height: 100%;
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .container { max-width: 800px; margin: 0 auto; }
+
+        header {
+            text-align: center; margin-bottom: 30px;
+            background: var(--card-bg); border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;
+        }
+
+        .header-content { padding: 25px; }
+        h1 { color: var(--primary-color); margin: 0; font-size: 1.6rem; font-weight: 800; }
+        .subtitle { color: #7f8c8d; margin-top: 5px; font-weight: 500; }
+
+        .section {
+            background: var(--card-bg); margin-bottom: 25px; padding: 25px;
+            border-radius: var(--border-radius); box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border-left: 5px solid #dcdde1;
+        }
+
+        .section-form { border-left-color: #3498db; }
+        .section-manoeuvre { border-left-color: #27ae60; }
+
+        .section-title {
+            display: flex; align-items: center;
+            font-size: 1.2rem; font-weight: 800; margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .icon-number {
+            background: var(--primary-color); color: white;
+            border-radius: 6px; padding: 2px 10px; margin-right: 15px;
+        }
+
+        .checklist-item {
+            display: flex; align-items: flex-start;
+            margin-bottom: 12px; cursor: pointer; padding: 8px;
+            border-radius: 8px; transition: all 0.2s;
+        }
+
+        .checklist-item:hover { background-color: #f8f9fa; transform: translateX(5px); }
+
+        input[type="checkbox"] {
+            margin-top: 4px; margin-right: 15px;
+            width: 20px; height: 20px; accent-color: var(--accent-color);
+        }
+
+        input[type="text"]#user-name {
+            width: 100%; padding: 10px; margin-bottom: 15px;
+            border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;
+        }
+
+        .content-wrapper { flex: 1; font-weight: 500; }
+        
+        .reset-container { text-align: center; margin-top: 40px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .btn {
+            color: white; border: none;
+            padding: 12px 25px; border-radius: 30px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 300px;
+        }
+
+        .btn-discord {
+            background: var(--discord-color);
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+        }
+
+        .btn-reset {
+            background: #e74c3c;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 600px) { h1 { font-size: 1.3rem; } }
     </style>
 </head>
 <body>
 
-<div class="dashboard">
-    <img src="logo.png" class="logo" alt="Logo">
-    <h1>CAMPUS DIGITAL</h1>
-    <div class="motto">"L'échec est un diplôme"</div>
+<div class="progress-container">
+    <div class="progress-wrapper">
+        <div class="progress-text">
+            <span>Progression Globale</span>
+            <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-fill"></div>
+        </div>
+    </div>
+</div>
 
-    <div style="text-align: left; font-size: 11px; color: #949ba4;">PROGRESSION</div>
-    <div class="bar-bg"><div class="bar-fill" id="fill"></div></div>
+<div class="container">
+    <header>
+        <div class="header-content">
+            <h1>GUIDE E-TUTEUR</h1>
+            <p class="subtitle">Organisation & Suivi de Formation</p>
+        </div>
+    </header>
 
-    <div id="taskList" style="margin-top: 20px;">
-        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Analyse du besoin</span> </div>
-        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Objectifs Pédagogiques</span> </div>
-        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Scénarisation</span> </div>
+    <div class="section section-form">
+        <div class="section-title"><span class="icon-number">🚀</span> Bien préparer ma formation (Apprenant)</div>
+        
+        <input type="text" id="user-name" placeholder="Votre Nom et Prénom" oninput="saveName()">
+
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Contact e-tuteur"> <div class="content-wrapper">J’ai contacté mon e-tuteur</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Dates PPS"> <div class="content-wrapper">J’ai consulté les dates de préparations proposées par le PPS</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Accès Discord"> <div class="content-wrapper">J’ai été sur Discord dans la catégorie « espace apprenant »</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Documents formation"> <div class="content-wrapper">Je connais tous les documents à fournir en amont</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="FOAD Atena"> <div class="content-wrapper">J’ai été sur ATENA pour réaliser ma FOAD</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Aide Discord"> <div class="content-wrapper">J’ai demandé de l’aide aux apprenants de Discord</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Aide ACC PROX"> <div class="content-wrapper">J’ai demandé de l’aide aux ACC PROX de la caserne</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Convocation SDMIS"> <div class="content-wrapper">J’ai reçu ma convocation sur mon adresse SDMIS</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Compte-rendu CDC"> <div class="content-wrapper">J’ai passé ma formation et je rends compte à ma CDC</div></label>
+    </div>
+
+    <div class="section section-manoeuvre">
+        <div class="section-title"><span class="icon-number">🔥</span> Organisation Manœuvre Mensuelle</div>
+        <label class="checklist-item">
+            <input type="checkbox" class="task-checkbox" data-label="Thème manœuvre">
+            <div class="content-wrapper"><strong>Définir le thème</strong> (Incendie, SR, SAP, OD...)</div>
+        </label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Objectifs manœuvre"> <div class="content-wrapper">Identifier les compétences et adapter au niveau</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Scénario manœuvre"> <div class="content-wrapper">Lieu, bâtiment, situation et évènements injectés</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Logistique manœuvre"> <div class="content-wrapper">Sécurisation du site et autorisations</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Moyens Humains"> <div class="content-wrapper">Désignation des rôles, brief et sécurité</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Matériel/Engins"> <div class="content-wrapper">Disponibilité engins et simulateurs</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="EPI & Arrêt"> <div class="content-wrapper">Vérification EPI et moyen d'arrêt immédiat</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Briefing initial"> <div class="content-wrapper">Briefing initial et grille d'observation</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Adaptation scénario"> <div class="content-wrapper">Lancement et adaptation du scénario</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Débriefing"> <div class="content-wrapper">Analyse des points positifs et axes d'amélioration</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Clôture/Archivage"> <div class="content-wrapper">Remise en état et archivage du CR</div></label>
+    </div>
+
+    <div class="reset-container">
+        <button class="btn btn-discord" onclick="shareProgress()">📋 Envoyer le bilan sur Discord</button>
+        <button class="btn btn-reset" onclick="resetForm()">🔄 Réinitialiser la fiche</button>
     </div>
 </div>
 
 <script>
-    function toggle(el) {
-        el.classList.toggle('done');
-        const tasks = document.querySelectorAll('.task');
-        const done = document.querySelectorAll('.done');
-        const pct = Math.round((done.length / tasks.length) * 100);
-        document.getElementById('fill').style.width = pct + '%';
-        // Sauvegarde locale
-        const states = Array.from(tasks).map(t => t.classList.contains('done'));
-        localStorage.setItem('campus_prog', JSON.stringify(states));
+    const checkboxes = document.querySelectorAll('.task-checkbox');
+    const progressBar = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-percent');
+    const nameInput = document.getElementById('user-name');
+
+    // CONFIGURATION DISCORD - A REMPLIR AVEC VOS IDENTIFIANTS
+    const ID_DU_SERVEUR = "1150436593094643796"; 
+    const ID_DU_SALON = "1488168063030526092";
+
+    function updateProgress() {
+        const total = checkboxes.length;
+        const checked = document.querySelectorAll('.task-checkbox:checked').length;
+        const percentage = Math.round((checked / total) * 100);
+        progressBar.style.width = percentage + '%';
+        progressText.innerText = percentage + '%';
+        checkboxes.forEach((cb, index) => {
+            localStorage.setItem('manoeuvre-step-' + index, cb.checked);
+        });
     }
 
-    // Chargement de la sauvegarde
-    const saved = JSON.parse(localStorage.getItem('campus_prog'));
-    if(saved) {
-        const tasks = document.querySelectorAll('.task');
-        saved.forEach((isDone, i) => { if(isDone) tasks[i].classList.add('done'); });
-        const done = document.querySelectorAll('.done');
-        document.getElementById('fill').style.width = Math.round((done.length / tasks.length) * 100) + '%';
+    function saveName() {
+        localStorage.setItem('apprenant-name', nameInput.value);
     }
+
+    function loadProgress() {
+        nameInput.value = localStorage.getItem('apprenant-name') || "";
+        checkboxes.forEach((cb, index) => {
+            const saved = localStorage.getItem('manoeuvre-step-' + index);
+            if (saved === 'true') cb.checked = true;
+        });
+        updateProgress();
+    }
+
+    function shareProgress() {
+        const name = nameInput.value || "Apprenant anonyme";
+        const total = checkboxes.length;
+        const checked = document.querySelectorAll('.task-checkbox:checked').length;
+        const percentage = Math.round((checked / total) * 100);
+        
+        let report = `📊 **BILAN DE PROGRESSION - ${name.toUpperCase()}**\n`;
+        report += `━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        report += `✅ Progression totale : ${percentage}%\n\n`;
+        report += `**Détails des tâches complétées :**\n`;
+        
+        checkboxes.forEach(cb => {
+            if(cb.checked) {
+                report += `🔹 ${cb.getAttribute('data-label')}\n`;
+            }
+        });
+
+        if(checked === 0) report += "_Aucune tâche complétée pour le moment._";
+
+        // Tente de copier dans le presse-papier
+        navigator.clipboard.writeText(report).then(() => {
+            alert("Bilan copié ! Clique sur OK : j'ouvre le salon suivi, tu n'auras plus qu'à coller (Ctrl+V).");
+            // Ouvre Discord sur le salon spécifique
+            window.open(`discord://discordapp.com/channels/${ID_DU_SERVEUR}/${ID_DU_SALON}`, '_blank');
+        });
+    }
+
+    function resetForm() {
+        if(confirm("Voulez-vous effacer toute la progression ?")) {
+            checkboxes.forEach((cb, index) => {
+                cb.checked = false;
+                localStorage.removeItem('manoeuvre-step-' + index);
+            });
+            localStorage.removeItem('apprenant-name');
+            nameInput.value = "";
+            updateProgress();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
+    window.onload = loadProgress;
 </script>
 
 </body>
