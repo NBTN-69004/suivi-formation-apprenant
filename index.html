@@ -58,7 +58,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;
         }
 
-        /* Style pour votre nouvelle image d'entête */
         .header-banner {
             width: 100%;
             height: auto;
@@ -76,7 +75,6 @@
         }
 
         .section-form { border-left-color: #3498db; }
-        .section-manoeuvre { border-left-color: #27ae60; }
 
         .section-title {
             display: flex; align-items: center;
@@ -104,7 +102,7 @@
 
         input[type="text"]#user-name {
             width: 100%; padding: 10px; margin-bottom: 15px;
-            border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;
+            border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; box-sizing: border-box;
         }
 
         .content-wrapper { flex: 1; font-weight: 500; }
@@ -212,24 +210,34 @@
     function shareProgress() {
         const name = nameInput.value || "Apprenant anonyme";
         const total = checkboxes.length;
-        const checked = document.querySelectorAll('.task-checkbox:checked').length;
-        const percentage = Math.round((checked / total) * 100);
+        const checkedCount = document.querySelectorAll('.task-checkbox:checked').length;
+        const percentage = Math.round((checkedCount / total) * 100);
         
         let report = `📊 **BILAN DE PROGRESSION - ${name.toUpperCase()}**\n`;
         report += `━━━━━━━━━━━━━━━━━━━━━━━━\n`;
         report += `✅ Progression totale : ${percentage}%\n\n`;
-        report += `**Détails des tâches complétées :**\n`;
+        
+        // Bloc 'diff' pour la couleur (Vert pour +, Rouge pour -)
+        report += `\`\`\`diff\n`;
         
         checkboxes.forEach(cb => {
+            const label = cb.getAttribute('data-label');
             if(cb.checked) {
-                report += `🔹 ${cb.getAttribute('data-label')}\n`;
+                report += `+ [OK] ${label}\n`;
+            } else {
+                report += `- [ ] ${label}\n`;
             }
         });
 
-        if(checked === 0) report += "_Aucune tâche complétée pour le moment._";
+        report += `\`\`\``;
+
+        if(checkedCount === 0 && !nameInput.value) {
+            alert("La fiche semble vide !");
+            return;
+        }
 
         navigator.clipboard.writeText(report).then(() => {
-            alert("Bilan copié ! Clique sur OK : j'ouvre le salon suivi, tu n'auras plus qu'à coller (Ctrl+V).");
+            alert("Bilan copié en couleur ! Clique sur OK : j'ouvre le salon suivi, tu n'auras plus qu'à coller (Ctrl+V).");
             window.open(`discord://discordapp.com/channels/${ID_DU_SERVEUR}/${ID_DU_SALON}`, '_blank');
         });
     }
