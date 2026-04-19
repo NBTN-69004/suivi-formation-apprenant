@@ -18,8 +18,43 @@
 <body>
     <div class="card">
         <img src="https://i.postimg.cc/8PzL7GfL/image.png" class="logo" alt="Logo">
-        <h1>CAMPUS DIGITAL</h1>
-        <p>"L'échec est un diplôme"</p>
+        <h1>Fiche de suivi à votre formation</h1>
+        <p>"🔥 Présentation de la fiche de suivi”
+
+Avant de commencer votre préparation au stage initial, vous allez recevoir votre fiche de suivi.
+
+Ce n’est pas un simple document.
+C’est votre outil de progression.
+
+À partir d’aujourd’hui, chaque séance, chaque manœuvre, chaque effort compte.
+Cette fiche va vous permettre de suivre votre évolution, de mesurer vos acquis et d’identifier ce qu’il vous reste à travailler pour être prêt le jour du stage.
+
+👉 Elle vous engage.
+👉 Elle vous responsabilise.
+👉 Elle vous prépare à la réalité du terrain.
+
+Ici, on ne cherche pas la perfection immédiate.
+On cherche la progression.
+
+Vous allez apprendre, essayer, vous tromper, recommencer… et progresser.
+Et cette fiche sera la trace de ce chemin.
+
+Servez-vous-en pour :
+✔ prendre du recul sur vos pratiques
+✔ poser des questions
+✔ échanger avec vos formateurs
+✔ vous fixer des objectifs clairs
+
+Le stage initial ne s’improvise pas.
+Il se prépare.
+
+Et votre engagement aujourd’hui fera la différence demain, sur intervention.
+
+⸻
+
+🎯 Punchline de fin (à dire à l’oral)
+
+“Votre fiche de suivi, c’est votre première responsabilité de futur intervenant.”"</p>
         <div style="border-top: 1px solid #3f4455; margin: 20px 0; padding-top: 20px;">
             <p>Plateforme en cours de déploiement...</p>
             <a href="#" class="btn" onclick="alert('Chargement du suivi...')">Accéder à mon suivi</a>
