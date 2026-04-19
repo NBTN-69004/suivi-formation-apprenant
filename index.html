@@ -213,31 +213,32 @@
         const checkedCount = document.querySelectorAll('.task-checkbox:checked').length;
         const percentage = Math.round((checkedCount / total) * 100);
         
-        let report = `📊 **BILAN DE PROGRESSION - ${name.toUpperCase()}**\n`;
+        // Entête du message
+        let report = `📊 **FICHE DE SUIVI FORMATION**\n`;
+        report += `👤 **NOM :** ${name.toUpperCase()}\n`;
         report += `━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-        report += `✅ Progression totale : ${percentage}%\n\n`;
+        report += `📈 **PROGRESSION : ${percentage}%** \`[${checkedCount}/${total}]\`\n\n`;
         
-        // Bloc 'diff' pour la couleur (Vert pour +, Rouge pour -)
-        report += `\`\`\`diff\n`;
-        
+        // Listage des tâches avec Emojis pour la couleur visuelle
         checkboxes.forEach(cb => {
             const label = cb.getAttribute('data-label');
             if(cb.checked) {
-                report += `+ [OK] ${label}\n`;
+                report += `✅ **${label}**\n`;
             } else {
-                report += `- [ ] ${label}\n`;
+                report += `❌ ~~${label}~~\n`;
             }
         });
 
-        report += `\`\`\``;
+        report += `\n━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        report += `*Généré via le Guide E-Tuteur*`;
 
         if(checkedCount === 0 && !nameInput.value) {
-            alert("La fiche semble vide !");
+            alert("Remplissez au moins votre nom ou une case avant d'envoyer !");
             return;
         }
 
         navigator.clipboard.writeText(report).then(() => {
-            alert("Bilan copié en couleur ! Clique sur OK : j'ouvre le salon suivi, tu n'auras plus qu'à coller (Ctrl+V).");
+            alert("Bilan copié ! Le format est maintenant plus propre avec des indicateurs visuels ✅/❌.");
             window.open(`discord://discordapp.com/channels/${ID_DU_SERVEUR}/${ID_DU_SALON}`, '_blank');
         });
     }
