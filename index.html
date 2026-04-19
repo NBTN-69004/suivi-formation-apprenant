@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Préparation Formation & Manœuvre</title>
+    <title>Préparation Manœuvre Mensuelle</title>
     <style>
         :root {
             --primary-color: #2c3e50;
             --accent-color: #27ae60;
-            --discord-color: #5865F2;
             --bg-color: #f4f7f6;
             --card-bg: #ffffff;
             --text-color: #333;
@@ -58,6 +57,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;
         }
 
+        .header-image { width: 100%; height: auto; display: block; }
         .header-content { padding: 25px; }
         h1 { color: var(--primary-color); margin: 0; font-size: 1.6rem; font-weight: 800; }
         .subtitle { color: #7f8c8d; margin-top: 5px; font-weight: 500; }
@@ -67,9 +67,6 @@
             border-radius: var(--border-radius); box-shadow: 0 4px 10px rgba(0,0,0,0.03);
             border-left: 5px solid #dcdde1;
         }
-
-        .section-form { border-left-color: #3498db; }
-        .section-manoeuvre { border-left-color: #27ae60; }
 
         .section-title {
             display: flex; align-items: center;
@@ -95,29 +92,13 @@
             width: 20px; height: 20px; accent-color: var(--accent-color);
         }
 
-        input[type="text"]#user-name {
-            width: 100%; padding: 10px; margin-bottom: 15px;
-            border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;
-        }
-
         .content-wrapper { flex: 1; font-weight: 500; }
         
-        .reset-container { text-align: center; margin-top: 40px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .btn {
-            color: white; border: none;
-            padding: 12px 25px; border-radius: 30px; font-weight: bold;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 300px;
-        }
-
-        .btn-discord {
-            background: var(--discord-color);
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
-        }
-
+        .reset-container { text-align: center; margin-top: 40px; }
         .btn-reset {
-            background: #e74c3c;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-            font-size: 0.8rem;
+            background: #e74c3c; color: white; border: none;
+            padding: 12px 25px; border-radius: 30px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
         }
 
         @media (max-width: 600px) { h1 { font-size: 1.3rem; } }
@@ -128,7 +109,7 @@
 <div class="progress-container">
     <div class="progress-wrapper">
         <div class="progress-text">
-            <span>Progression Globale</span>
+            <span>Progression Préparation</span>
             <span id="progress-percent">0%</span>
         </div>
         <div class="progress-bar-bg">
@@ -139,49 +120,78 @@
 
 <div class="container">
     <header>
+        <img src="7D4D447F-24E4-4266-B88A-5FC8E4A6B630.png" alt="Header" class="header-image">
         <div class="header-content">
             <h1>GUIDE E-TUTEUR</h1>
-            <p class="subtitle">Organisation & Suivi de Formation</p>
+            <p class="subtitle">Organisation de la Manœuvre Mensuelle</p>
         </div>
     </header>
 
-    <div class="section section-form">
-        <div class="section-title"><span class="icon-number">🚀</span> Bien préparer ma formation (Apprenant)</div>
-        
-        <input type="text" id="user-name" placeholder="Votre Nom et Prénom" oninput="saveName()">
-
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Contact e-tuteur"> <div class="content-wrapper">J’ai contacté mon e-tuteur</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Dates PPS"> <div class="content-wrapper">J’ai consulté les dates de préparations proposées par le PPS</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Accès Discord"> <div class="content-wrapper">J’ai été sur Discord dans la catégorie « espace apprenant »</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Documents formation"> <div class="content-wrapper">Je connais tous les documents à fournir en amont</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="FOAD Atena"> <div class="content-wrapper">J’ai été sur ATENA pour réaliser ma FOAD</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Aide Discord"> <div class="content-wrapper">J’ai demandé de l’aide aux apprenants de Discord</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Aide ACC PROX"> <div class="content-wrapper">J’ai demandé de l’aide aux ACC PROX de la caserne</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Convocation SDMIS"> <div class="content-wrapper">J’ai reçu ma convocation sur mon adresse SDMIS</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Compte-rendu CDC"> <div class="content-wrapper">J’ai passé ma formation et je rends compte à ma CDC</div></label>
-    </div>
-
-    <div class="section section-manoeuvre">
-        <div class="section-title"><span class="icon-number">🔥</span> Organisation Manœuvre Mensuelle</div>
+    <div class="section">
         <label class="checklist-item">
-            <input type="checkbox" class="task-checkbox" data-label="Thème manœuvre">
+            <input type="checkbox" class="task-checkbox">
             <div class="content-wrapper"><strong>Définir le thème</strong> (Incendie, SR, SAP, OD...)</div>
         </label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Objectifs manœuvre"> <div class="content-wrapper">Identifier les compétences et adapter au niveau</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Scénario manœuvre"> <div class="content-wrapper">Lieu, bâtiment, situation et évènements injectés</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Logistique manœuvre"> <div class="content-wrapper">Sécurisation du site et autorisations</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Moyens Humains"> <div class="content-wrapper">Désignation des rôles, brief et sécurité</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Matériel/Engins"> <div class="content-wrapper">Disponibilité engins et simulateurs</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="EPI & Arrêt"> <div class="content-wrapper">Vérification EPI et moyen d'arrêt immédiat</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Briefing initial"> <div class="content-wrapper">Briefing initial et grille d'observation</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Adaptation scénario"> <div class="content-wrapper">Lancement et adaptation du scénario</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Débriefing"> <div class="content-wrapper">Analyse des points positifs et axes d'amélioration</div></label>
-        <label class="checklist-item"><input type="checkbox" class="task-checkbox" data-label="Clôture/Archivage"> <div class="content-wrapper">Remise en état et archivage du CR</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">1</span> Objectifs</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Identifier les compétences et adapter au niveau</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Déterminer les critères de réussite</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">2</span> Scénario</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Situation initiale et évènements injectés</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Définir le contexte (Lieu, bâtiment, victimes)</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">3</span> Logistique</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Sécurisation du site et autorisations</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Zones engins, observateurs et débriefing</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">4</span> Humain</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Désignation des rôles et plastrons</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Brief des encadrants et sécurité</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">5</span> Matériel</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Disponibilité engins et simulateurs (fumée, etc.)</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Vérification de l'état avant départ</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">6</span> Sécurité</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Identification des risques et prévention</div></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Moyen d'arrêt immédiat et vérification EPI</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">7</span> Pédagogie</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Briefing initial et grille d'observation</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">8</span> Conduite</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Lancement et adaptation du scénario</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">9</span> Débriefing</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Analyse des points positifs et axes d'amélioration</div></label>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><span class="icon-number">10</span> Clôture</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <div class="content-wrapper">Remise en état et archivage CR</div></label>
     </div>
 
     <div class="reset-container">
-        <button class="btn btn-discord" onclick="shareProgress()">📋 Envoyer le bilan sur Discord</button>
-        <button class="btn btn-reset" onclick="resetForm()">🔄 Réinitialiser la fiche</button>
+        <button class="btn-reset" onclick="resetForm()">🔄 Réinitialiser la fiche</button>
     </div>
 </div>
 
@@ -189,11 +199,6 @@
     const checkboxes = document.querySelectorAll('.task-checkbox');
     const progressBar = document.getElementById('progress-fill');
     const progressText = document.getElementById('progress-percent');
-    const nameInput = document.getElementById('user-name');
-
-    // CONFIGURATION DISCORD - A REMPLIR AVEC VOS IDENTIFIANTS
-    const ID_DU_SERVEUR = "1150436593094643796"; 
-    const ID_DU_SALON = "1488168063030526092";
 
     function updateProgress() {
         const total = checkboxes.length;
@@ -206,44 +211,12 @@
         });
     }
 
-    function saveName() {
-        localStorage.setItem('apprenant-name', nameInput.value);
-    }
-
     function loadProgress() {
-        nameInput.value = localStorage.getItem('apprenant-name') || "";
         checkboxes.forEach((cb, index) => {
             const saved = localStorage.getItem('manoeuvre-step-' + index);
             if (saved === 'true') cb.checked = true;
         });
         updateProgress();
-    }
-
-    function shareProgress() {
-        const name = nameInput.value || "Apprenant anonyme";
-        const total = checkboxes.length;
-        const checked = document.querySelectorAll('.task-checkbox:checked').length;
-        const percentage = Math.round((checked / total) * 100);
-        
-        let report = `📊 **BILAN DE PROGRESSION - ${name.toUpperCase()}**\n`;
-        report += `━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-        report += `✅ Progression totale : ${percentage}%\n\n`;
-        report += `**Détails des tâches complétées :**\n`;
-        
-        checkboxes.forEach(cb => {
-            if(cb.checked) {
-                report += `🔹 ${cb.getAttribute('data-label')}\n`;
-            }
-        });
-
-        if(checked === 0) report += "_Aucune tâche complétée pour le moment._";
-
-        // Tente de copier dans le presse-papier
-        navigator.clipboard.writeText(report).then(() => {
-            alert("Bilan copié ! Clique sur OK : j'ouvre le salon suivi, tu n'auras plus qu'à coller (Ctrl+V).");
-            // Ouvre Discord sur le salon spécifique
-            window.open(`discord://discordapp.com/channels/${ID_DU_SERVEUR}/${ID_DU_SALON}`, '_blank');
-        });
     }
 
     function resetForm() {
@@ -252,8 +225,6 @@
                 cb.checked = false;
                 localStorage.removeItem('manoeuvre-step-' + index);
             });
-            localStorage.removeItem('apprenant-name');
-            nameInput.value = "";
             updateProgress();
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
